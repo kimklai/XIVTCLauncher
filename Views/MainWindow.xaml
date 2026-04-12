@@ -7,7 +7,8 @@
         xmlns:viewmodels="clr-namespace:FFXIVSimpleLauncher.ViewModels"
         mc:Ignorable="d"
         Title="XIV TC Launcher"
-        Height="520" Width="500"
+        Height="520"
+        Width="500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -16,7 +17,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}">
 
     <Window.DataContext>
-        <viewmodels:MainViewModel />
+        <viewmodels:MainViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
@@ -25,13 +26,20 @@
 
     <Grid Margin="24">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>  <!-- Row 0: 啟動器更新提示 -->
-            <RowDefinition Height="Auto"/>  <!-- Row 1: Title -->
-            <RowDefinition Height="Auto"/>  <!-- Row 2: Subtitle -->
-            <RowDefinition Height="Auto"/>  <!-- Row 3: Account Selection -->
-            <RowDefinition Height="Auto"/>  <!-- Row 4: Buttons -->
-            <RowDefinition Height="Auto"/>  <!-- Row 5: Game Update Card -->
-            <RowDefinition Height="*"/>     <!-- Row 6: Status Log -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 0: 啟動器更新提示 -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 1: Title -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 2: Subtitle -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 3: Account Selection -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 4: Buttons -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 5: Game Update Card -->
+            <RowDefinition Height="*"/>
+            <!-- Row 6: Status Log -->
         </Grid.RowDefinitions>
 
         <!-- 啟動器更新提示橫幅 (Row 0) -->
@@ -50,10 +58,13 @@
                 <Grid Grid.Row="0">
                     <Grid.Style>
                         <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsDownloadingLauncherUpdate}" Value="True">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                <DataTrigger Binding="{Binding IsDownloadingLauncherUpdate}"
+                                        Value="True">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -63,23 +74,30 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock Foreground="White" FontWeight="Bold" FontSize="14">
+                    <StackPanel Grid.Column="0"
+                            VerticalAlignment="Center">
+                        <TextBlock Foreground="White"
+                                FontWeight="Bold"
+                                FontSize="14">
                             <Run Text="發現新版本 "/>
                             <Run Text="{Binding LatestLauncherVersion, Mode=OneWay}"/>
                         </TextBlock>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Column="1"
+                            Orientation="Horizontal">
                         <Button Content="立即更新"
                                 Command="{Binding UpdateLauncherCommand}"
                                 Margin="0,0,8,0"
                                 Padding="12,4"
                                 FontSize="12">
                             <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatLightBgButton}">
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                                <Style TargetType="Button"
+                                        BasedOn="{StaticResource MaterialDesignFlatLightBgButton}">
+                                    <Setter Property="Background"
+                                            Value="White"/>
+                                    <Setter Property="Foreground"
+                                            Value="{DynamicResource PrimaryHueMidBrush}"/>
                                 </Style>
                             </Button.Style>
                         </Button>
@@ -127,7 +145,10 @@
                    Margin="0,0,0,8"/>
 
         <!-- Subtitle with Version -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,16">
+        <StackPanel Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,16">
             <TextBlock Text="台灣版"
                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                        Foreground="{DynamicResource MaterialDesignBodyLight}"/>
@@ -140,7 +161,10 @@
         </StackPanel>
 
         <!-- Account Selection (Row 3) -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,16">
+        <StackPanel Grid.Row="3"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,16">
             <TextBlock Text="帳號："
                        VerticalAlignment="Center"
                        Margin="0,0,8,0"
@@ -181,10 +205,13 @@
                    Margin="0,8,0,16">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Visibility"
+                            Value="Collapsed"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasAccounts}" Value="False">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger Binding="{Binding HasAccounts}"
+                                Value="False">
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -192,8 +219,11 @@
         </TextBlock>
 
         <!-- Buttons (Row 4) -->
-        <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="4"
+                Orientation="Vertical"
+                HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
                 <Button Content="登入"
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding CanLogin}"
@@ -211,7 +241,9 @@
                         FontSize="16"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,12,0,0">
                 <Button Content="測試注入 (跳過登入)"
                         Command="{Binding TestInjectCommand}"
                         Style="{StaticResource MaterialDesignFlatButton}"
@@ -239,16 +271,23 @@
                              Background="{DynamicResource MaterialDesignCardBackground}">
             <materialDesign:Card.Style>
                 <Style TargetType="materialDesign:Card">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Visibility"
+                            Value="Collapsed"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasUpdate}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger Binding="{Binding HasUpdate}"
+                                Value="True">
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsUpdating}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger Binding="{Binding IsUpdating}"
+                                Value="True">
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsCheckingUpdate}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger Binding="{Binding IsCheckingUpdate}"
+                                Value="True">
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -276,10 +315,13 @@
                            Margin="0,0,0,12">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding UpdateInfo}" Value="">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                <DataTrigger Binding="{Binding UpdateInfo}"
+                                        Value="">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -345,17 +387,25 @@
                             FontSize="13"
                             Margin="0,0,12,0">
                         <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                                <Setter Property="Visibility" Value="Visible"/>
+                            <Style TargetType="Button"
+                                    BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                <Setter Property="Visibility"
+                                        Value="Visible"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsUpdating}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    <DataTrigger Binding="{Binding IsUpdating}"
+                                            Value="True">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsCheckingUpdate}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    <DataTrigger Binding="{Binding IsCheckingUpdate}"
+                                            Value="True">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding HasUpdate}" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    <DataTrigger Binding="{Binding HasUpdate}"
+                                            Value="False">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -378,16 +428,22 @@
                             FontSize="12"
                             Foreground="{DynamicResource PrimaryHueMidBrush}">
                         <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style TargetType="Button"
+                                    BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding HasUpdate}" Value="False"/>
-                                            <Condition Binding="{Binding IsUpdating}" Value="False"/>
-                                            <Condition Binding="{Binding IsCheckingUpdate}" Value="False"/>
+                                            <Condition Binding="{Binding HasUpdate}"
+                                                    Value="False"/>
+                                            <Condition Binding="{Binding IsUpdating}"
+                                                    Value="False"/>
+                                            <Condition Binding="{Binding IsCheckingUpdate}"
+                                                    Value="False"/>
                                         </MultiDataTrigger.Conditions>
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
                                     </MultiDataTrigger>
                                 </Style.Triggers>
                             </Style>

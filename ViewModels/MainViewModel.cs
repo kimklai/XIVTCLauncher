@@ -137,6 +137,51 @@ public partial class MainViewModel : ObservableObject
 
         // 啟動時自動檢查更新
         _ = CheckUpdateOnStartupAsync();
+
+
+        // 啟動時自動登入 / 啟動遊戲（如果設定有開）
+        TryAutoLoginOnStartup();
+    }
+    private bool _autoLoginTried = false;
+
+    private async void TryAutoLoginOnStartup()
+    {
+        if (_autoLoginTried)
+            return;
+        _autoLoginTried = true;
+
+        // // 沒開自動登入就不做
+        // if (!_settings.AutoLoginOnStart)
+        //     return;
+
+        // 要有選到帳號
+        if (SelectedAccount == null)
+            return;
+
+        // 要有記住密碼
+        if (!SelectedAccount.RememberPassword)
+            return;
+
+        // 確認 Credential Manager 裡真的有這個帳號的密碼
+        var savedPassword = _accountService.GetPassword(SelectedAccount.Id);
+        if (string.IsNullOrEmpty(savedPassword))
+            return;
+
+        // 如果有開自動 OTP，確認 Credential 裡真的有 OTP secret
+        if (SelectedAccount.AutoOtp && SelectedAccount.UseOtp)
+        {
+            if (!OtpService.HasSecretForAccount(SelectedAccount.Id))
+                return;
+        }
+
+        try
+        {
+            await LoginAsync();  // 這裡會開 WebLoginWindow，走原本完整流程，成功後直接啟動遊戲
+        }
+        catch
+        {
+            // 自動登入失敗就讓使用者手動操作，不要再自動重試
+        }
     }
 
     /// <summary>

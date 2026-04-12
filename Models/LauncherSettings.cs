@@ -70,4 +70,8 @@ public class LauncherSettings
     /// Local Dalamud path (only used when DalamudSourceMode is LocalPath).
     /// </summary>
     public string LocalDalamudPath { get; set; } = string.Empty;
+
+    public bool AutoLoginOnStart { get; set; } = false;
+
+    public bool AutoStartGameAfterLogin { get; set; } = false;
 }
