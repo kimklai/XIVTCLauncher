@@ -230,12 +230,15 @@ public class LauncherUpdateService
             return;
         }
 
+        var currentProcessId = Environment.ProcessId;
+
         // Create the update batch script with logging
         var logPath = Path.Combine(Path.GetTempPath(), "XIVTCLauncher-Update.log");
         var batchPath = Path.Combine(Path.GetTempPath(), "XIVTCLauncher-Update.bat");
         var batchContent = $@"@echo off
 chcp 65001 > nul
 set LOGFILE=""{logPath}""
+set LAUNCHER_PID={currentProcessId}
 
 echo ========================================== > %LOGFILE%
 echo   XIV TC Launcher 自動更新日誌 >> %LOGFILE%
@@ -261,6 +264,17 @@ echo 來源: {updateSourceDir}
 echo 目標: {targetDir}
 echo.
 
+echo 等待啟動器完全關閉...
+echo. >> %LOGFILE%
+echo 等待啟動器 PID %LAUNCHER_PID% 結束... >> %LOGFILE%
+for /L %%i in (1,1,30) do (
+    tasklist /FI ""PID eq %LAUNCHER_PID%"" 2>nul | find ""%LAUNCHER_PID%"" >nul
+    if errorlevel 1 goto :PROCESS_EXITED
+    timeout /t 1 /nobreak > nul
+)
+echo 警告: 啟動器 PID %LAUNCHER_PID% 仍可能存在，繼續嘗試更新。 >> %LOGFILE%
+
+:PROCESS_EXITED
 echo. >> %LOGFILE%
 echo 檢查來源目錄內容: >> %LOGFILE%
 dir ""{updateSourceDir}"" >> %LOGFILE% 2>&1
@@ -272,7 +286,7 @@ dir ""{targetDir}\FFXIVSimpleLauncher.exe"" >> %LOGFILE% 2>&1
 echo 複製新檔案...
 echo. >> %LOGFILE%
 echo 執行 robocopy... >> %LOGFILE%
-robocopy ""{updateSourceDir}"" ""{targetDir}"" /E /IS /IT /V >> %LOGFILE% 2>&1
+robocopy ""{updateSourceDir}"" ""{targetDir}"" /E /IS /IT /V /R:5 /W:1 >> %LOGFILE% 2>&1
 set ROBOCOPY_EXIT=%errorlevel%
 echo robocopy 結束碼: %ROBOCOPY_EXIT% >> %LOGFILE%
 echo robocopy 結束碼: %ROBOCOPY_EXIT% (0-7 為成功)
@@ -307,7 +321,7 @@ rmdir /S /Q ""{updateSourceDir}"" 2>nul
 del ""%~f0""
 ";
 
-        File.WriteAllText(batchPath, batchContent, System.Text.Encoding.UTF8);
+        File.WriteAllText(batchPath, batchContent, new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
         ReportStatus("正在啟動更新程式...");
 
